@@ -227,7 +227,7 @@
             
 
             datamap.svg.selectAll('.datamaps-subunit').on('click', function(geography) {
-                      if(flagMouse < 15){
+                      if(flagMouse > 0){
                           link = geography.properties.name;
                           $("li").removeClass("selected");
                           $("li[title="+link+"]").addClass("selected");
@@ -242,14 +242,19 @@
       }
 
       //Necessário para não mudar de país ao dar scroll no mapa
-      var timeout = null;
-      $(document).on('mousemove', function() {
-          clearTimeout(timeout);
-          flagMouse++;
+      var movimento = null;
+      
 
-          timeout = setTimeout(function() {
-              flagMouse = 0
-          }, 100);
+      $(document).on('mousedown', function() {
+          flagMouse = 1;
+      });
+
+      $(document).on('mousemove', function() {
+          movimento++
+          if(movimento > 20){
+            flagMouse = 0;
+          }
+          
       });
 
       map = new Datamap();
