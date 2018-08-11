@@ -9,6 +9,7 @@
   	<meta http-equiv="X-UA-Compatible" content="ie=edge">
   	<link href="https://fonts.googleapis.com/css?family=Anton|Roboto:300,400,700" rel="stylesheet">
   	<link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="./css/zoom.css">
   	<!-- <link rel="stylesheet" href="css/bootstrap.min.css"> -->
   	<link rel="stylesheet" href="css/style.css">
   	<title>Trabalho InfoVis</title>
@@ -27,6 +28,7 @@
     <link rel="stylesheet" href="./css/jquery-ui.css">
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="./js/zoom.js"></script>
   </head>
 
 <body style="padding:0px;">
@@ -267,103 +269,79 @@
 
 </script>
 
+<button class="zoom-button" data-zoom="reset">0</button>
+<button class="zoom-button" data-zoom="out">-</button>
+<button class="zoom-button" data-zoom="in">+</button>
+
 <script>
 
  function startMap() {
-    latLong = {};
-    final = [];
-    var pais = $("#countries").val();
-    var bubbles = {};
-    bubblesFinal = [];
+    if(map != null){
+        latLong = {};
+        final = [];
+        var pais = $("#countries").val();
+        var bubbles = {};
+        bubblesFinal = [];
 
-    // for(paisI in paisClube){
-    //   for(year in paisClube[paisI]){
-    //     for(origem in paisClube[paisI][year]){
-    //       if(!paises[origem]){
-    //         console.log(origem);
-    //       }
-    //     }
-    //   }
-    // }
+        // for(paisI in paisClube){
+        //   for(year in paisClube[paisI]){
+        //     for(origem in paisClube[paisI][year]){
+        //       if(!paises[origem]){
+        //         console.log(origem);
+        //       }
+        //     }
+        //   }
+        // }
 
-    for(year in paisClube[pais]){
+        for(year in paisClube[pais]){
 
-        for(origem in paisClube[pais][year]){
-          if(year >= sliderValue[0] && year <= sliderValue[1]){
-            if(paises[origem]){
-              if(origem != pais){
-                  latLong["origin"] = {"latitude": paises[origem]["lat"], "longitude": paises[origem]["lon"]};
-                  latLong["destination"] = {"latitude": paises[pais]["lat"], "longitude": paises[pais]["lon"]};
-                  latLong["options"] = {"strokeWidth": (paisClube[pais][year][origem]/23)*10}
-                  final.push(latLong);
-                  latLong = {};
+            for(origem in paisClube[pais][year]){
+              if(year >= sliderValue[0] && year <= sliderValue[1]){
+                if(paises[origem]){
+                  if(origem != pais){
+                      latLong["origin"] = {"latitude": paises[origem]["lat"], "longitude": paises[origem]["lon"]};
+                      latLong["destination"] = {"latitude": paises[pais]["lat"], "longitude": paises[pais]["lon"]};
+                      latLong["options"] = {"strokeWidth": (paisClube[pais][year][origem]/23)*10}
+                      final.push(latLong);
+                      latLong = {};
+                  }
+
+                  bubbles = {"name": origem, "latitude": paises[origem]["lat"], "longitude": paises[origem]["lon"], radius: ((paisClube[pais][year][origem]/23)*15)+2, fillKey: 'gt50', borderWidth: 0.7, "copa":year + "'s World Cup", "qtdJogadores": paisClube[pais][year][origem]};
+                  bubblesFinal.push(bubbles);
+                  bubbles = {}
+                }
               }
-
-              bubbles = {"name": origem, "latitude": paises[origem]["lat"], "longitude": paises[origem]["lon"], radius: ((paisClube[pais][year][origem]/23)*15)+2, fillKey: 'gt50', borderWidth: 0.7, "copa":year + "'s World Cup", "qtdJogadores": paisClube[pais][year][origem]};
-              bubblesFinal.push(bubbles);
-              bubbles = {}
             }
-          }
+
         }
 
+      d3.csv("", function(json){
+
+       map.arc(final);
+
+       map.bubbles(bubblesFinal, {
+         popupTemplate: function(geo, data) {
+           return "<div class='hoverinfo' style='text-align: center'>"
+           + data.copa +
+           "<br/><b>"
+           + data.name +
+           "</b><br/>"
+           + data.qtdJogadores +
+           " players</div>";
+         }
+       });
+      });
+
     }
-
-  d3.csv("", function(json){
-
-   map.arc(final);
-
-   map.bubbles(bubblesFinal, {
-     popupTemplate: function(geo, data) {
-       return "<div class='hoverinfo' style='text-align: center'>"
-       + data.copa +
-       "<br/><b>"
-       + data.name +
-       "</b><br/>"
-       + data.qtdJogadores +
-       " players</div>";
-     }
-   });
-  });
+    
  }
 
-  var map = new Datamap({
-    scope: 'world',
-    element: document.getElementById('container1'),
-    projection: 'mercator',
-    height: 600,
-    width: 900,
-    geographyConfig: {
-            highlightOnHover: true,
-            popupOnHover: true
-    },
-    fills: {
-      // defaultFill: '#f0af0a',
-      defaultFill: '#b1dad2',
-      // lt50: 'rgba(0,244,244,0.9)',
-      lt50: 'rgba(20,20,20,0.9)',
-      gt50: 'red'
-    },
-    done: function(datamap) {
-            datamap.svg.selectAll('.datamaps-subunit').on('click', function(geography) {
-                link = geography.properties.name;
-                $("li").removeClass("selected");
-                $("li[title="+link+"]").addClass("selected");
-                $(".ddTitleText ").click();
-                $(".ddTitleText ").click();
-            });
-    },
+  var map;
 
-    data: {
-      // USA: {fillKey: 'lt50' },
-      // RUS: {fillKey: 'lt50' },
-      // CAN: {fillKey: 'lt50' },
-      // BRA: {fillKey: 'gt50' },
-      // ARG: {fillKey: 'gt50'},
-      // COL: {fillKey: 'gt50' },
-      // AUS: {fillKey: 'gt50' },
-      // ZAF: {fillKey: 'gt50' },
-      // MAD: {fillKey: 'gt50' }
-    }
-  })
+  function setMap(newMap){
+      map = newMap;
+  }
+
+
 
 </script>
