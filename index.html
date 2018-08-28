@@ -34,9 +34,10 @@
 <body style="padding:0px;">
 
 	<div class="site">
-		<header class="l-cabecalho">
+		<header class="l-cabecalho" style="background-color:white;">
       <input type="text" id="titleWork" value="Where Did They Play?" readonly style="border:0; color:#06928a; font-weight:bold; text-align: center; font-size: 20px; background-color:white;">
       </input>
+      <p id="subTitleWork" style="border:0;color:#06928a;font-weight: italic;text-align: center;font-size: 14px;font-style: italic;max-height: 32px;margin-top: -7px;"> "The power of a National Team shows the power of the ones who supplies it." <br/> A preview showing which countries the players summoned for the World Cups played professionally.</p>
  				<div class="container">
 					<!-- <a href="/index.html" class="logo-defensoria"></a> -->
 				  <table width=100%> <tr class="menubar"> <td width=100% style="background-color:#1abc9c"> <table> <tr>
@@ -83,6 +84,8 @@
 
 			<div class="container">
         <div class="divSelect" style="text-align: center">
+          <input type="text" id="selectNation" value="Select the National Team (or click on map):" readonly style="border:0; color:#06928a; font-weight:bold; text-align: center; font-size: 14px; background-color:white; height: 10px;">
+          </input>
           <select name="countries" id="countries" style="width:300px; text-align: center"></select>
         </div>
         <!-- <script src='./js/jquery.min.js'></script> -->
@@ -156,6 +159,8 @@
                 sliderValue[0] = $("#slider-range").slider('values',0);
                 sliderValue[1] = $("#slider-range").slider('values',1);
 
+                clearColor();
+
                 if(sliderValue[0] == sliderValue[1])
                   winnerInfo(sliderValue[0]);
                 else
@@ -185,6 +190,9 @@
               //Tempo em segundos
               var tempo = 1.5;
               start = 1930;
+
+              clearColor();
+
               $("#slider-range").slider('disable');
               $("#slider-range").slider('values',0,start);
               $("#slider-range").slider('values',1,start);
@@ -215,10 +223,13 @@
             });
 
             $( "#stop" ).click(function() {
+              clearColor();
+
               $("#slider-range").slider('values',0,1930);
               $("#slider-range").slider('values',1,2014);
               $("#slider-range").slider('enable');
               $( "#amount" ).val(1930 + " to " + 2014 + " FIFA World Cup");
+              winnerInfo();
               clearInterval(refresh);
               $("#stop").hide();
               $("#play").show();
@@ -252,8 +263,9 @@
 
                   <div id="container1" style="position: relative; width: 100%;">
                     <div id="winnerInfo" style="height:23px; margin-bottom:10px;">
-                      <p id="host" style="border:0; color:#06928a; font-weight:bold; text-align: center; font-size: 16px; float:left; width:50%"></p>
-                      <p id="winner" style="border:0; color:#06928a; font-weight:bold; text-align: center; font-size: 16px; float:left; width:50%"></p>
+                      <p id="host" style="border:0; color:#1130b5; font-weight:bold; text-align: center; font-size: 16px; float:left; width:33%"></p>
+                     <div id="legend" style="background-image: url(images/legenda.jpg); float:left; width:33%; background-size:100%;height: 23px;"></div>
+                      <p id="winner" style="border:0; color:#cfd132; font-weight:bold; text-align: center; font-size: 16px; float:left; width:33%"></p>
                     </div>
                   </div>
 
@@ -354,6 +366,8 @@
  }
 
   var map;
+  var oldHost;
+  var oldWinner;
 
   function setMap(newMap){
       map = newMap;
@@ -437,65 +451,120 @@
       $("#winner").css({"visibility":"visible"});
       if(year == "1930"){
         $("#host").text("Host: " + "Uruguay")
-        $("#winner").text("Winner: " + "Uruguay")}
+        $("#winner").text("Winner: " + "Uruguay")
+        changeColor("URY", "URY")}
       if(year == "1934"){
         $("#host").text("Host: " + "Italy")
-        $("#winner").text("Winner: " + "Italy")}
+        $("#winner").text("Winner: " + "Italy")
+        changeColor("ITA", "ITA")}
       if(year == "1938"){
         $("#host").text("Host: " + "France")
-        $("#winner").text("Winner: " + "Italy")}
+        $("#winner").text("Winner: " + "Italy")
+        changeColor("FRA", "ITA")}
       if(year == "1950"){
         $("#host").text("Host: " + "Brazil")
-        $("#winner").text("Winner: " + "Uruguay")}
+        $("#winner").text("Winner: " + "Uruguay")
+        changeColor("BRA", "URY")}
       if(year == "1954"){
         $("#host").text("Host: " + "Switzerland")
-        $("#winner").text("Winner: " + "West Germany")}
+        $("#winner").text("Winner: " + "West Germany")
+        changeColor("CHE", "DEU")}
       if(year == "1958"){
         $("#host").text("Host: " + "Sweden")
-        $("#winner").text("Winner: " + "Brazil")}
+        $("#winner").text("Winner: " + "Brazil")
+        changeColor("SWE", "BRA")}
       if(year == "1962"){
         $("#host").text("Host: " + "Chile")
-        $("#winner").text("Winner: " + "Brazil")}
+        $("#winner").text("Winner: " + "Brazil")
+       changeColor("CHL", "BRA")}}
       if(year == "1966"){
         $("#host").text("Host: " + "England")
-        $("#winner").text("Winner: " + "England")}
+        $("#winner").text("Winner: " + "England")
+        changeColor("GBR", "GBR")}
       if(year == "1970"){
         $("#host").text("Host: " + "Mexico")
-        $("#winner").text("Winner: " + "Brazil")}
+        $("#winner").text("Winner: " + "Brazil")
+        changeColor("MEX", "BRA")}
       if(year == "1974"){
         $("#host").text("Host: " + "West Germany")
-        $("#winner").text("Winner: " + "West Germany")}
+        $("#winner").text("Winner: " + "West Germany")
+        changeColor("DEU", "DEU")}
       if(year == "1978"){
         $("#host").text("Host: " + "Argentina")
-        $("#winner").text("Winner: " + "Argentina")}
+        $("#winner").text("Winner: " + "Argentina")
+        changeColor("ARG", "ARG")}
       if(year == "1982"){
         $("#host").text("Host: " + "Spain")
-        $("#winner").text("Winner: " + "Italy")}
+        $("#winner").text("Winner: " + "Italy")
+        changeColor("ESP", "ITA")}
       if(year == "1986"){
         $("#host").text("Host: " + "Mexico")
-        $("#winner").text("Winner: " + "Argentina")}
+        $("#winner").text("Winner: " + "Argentina")
+        changeColor("MEX", "ARG")}
       if(year == "1990"){
         $("#host").text("Host: " + "Italy")
-        $("#winner").text("Winner: " + "West Germany")}
+        $("#winner").text("Winner: " + "West Germany")
+        changeColor("ITA", "DEU")}
       if(year == "1994"){
         $("#host").text("Host: " + "United States")
-        $("#winner").text("Winner: " + "Brazil")}
+        $("#winner").text("Winner: " + "Brazil")
+        changeColor("USA", "BRA")}
       if(year == "1998"){
         $("#host").text("Host: " + "France")
-        $("#winner").text("Winner: " + "France")}
+        $("#winner").text("Winner: " + "France")
+        changeColor("FRA", "FRA")}
       if(year == "2002"){
         $("#host").text("Host: " + "South Korea and Japan")
-        $("#winner").text("Winner: " + "Brazil")}
+        $("#winner").text("Winner: " + "Brazil")
+        changeColor("JPN", "BRA")}
       if(year == "2006"){
         $("#host").text("Host: " + "Germany")
-        $("#winner").text("Winner: " + "Italy")}
+        $("#winner").text("Winner: " + "Italy")
+        changeColor("DEU", "ITA")}
       if(year == "2010"){
         $("#host").text("Host: " + "South Africa")
-        $("#winner").text("Winner: " + "Spain")}
+        $("#winner").text("Winner: " + "Spain")
+        changeColor("ZAF", "ESP")}
       if(year == "2014"){
         $("#host").text("Host: " + "Brazil")
-        $("#winner").text("Winner: " + "Germany")}
+        $("#winner").text("Winner: " + "Germany")
+        changeColor("BRA", "DEU")}
     }
+
+
+  function clearColor(){
+    if(oldHost !== undefined){
+      if(oldHost == "JPN"){
+        var oldObjHost1 = {};
+        oldObjHost1["KOR"] = "#b1dad2";
+        map.updateChoropleth(oldObjHost1);
+      }
+      var oldObjHost = {};
+      oldObjHost[oldHost] = "#b1dad2";
+      map.updateChoropleth(oldObjHost);
+    }
+    if(oldWinner !== undefined){
+      var oldObjWinner = {};
+      oldObjWinner[oldWinner] = "#b1dad2";
+      map.updateChoropleth(oldObjWinner);
+    }
+  }
+
+  function changeColor(host, winner) {
+    clearColor();
+    if(host == "JPN"){
+      var objHost1 = {};
+      objHost1["KOR"] = "#1130b5";
+      map.updateChoropleth(objHost1);
+    }
+    var objHost = {};
+    objHost[host] = "#1130b5";
+    map.updateChoropleth(objHost);
+    oldHost = host;
+    var objWinner = {};
+    objWinner[winner] = "#cfd132";
+    map.updateChoropleth(objWinner);
+    oldWinner = winner;
   }
 
 
