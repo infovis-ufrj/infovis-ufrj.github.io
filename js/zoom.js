@@ -195,11 +195,23 @@
               // element: document.getElementById('container1'),
               element: this.$container.get(0),
               projection: 'mercator',
-              height: 400,
+              height: 450,
               width: 900,
               geographyConfig: {
                       highlightOnHover: true,
                       popupOnHover: true
+              },
+              // Zoom in on Africa
+              setProjection: function(element) {
+                var projection = d3.geo.mercator()
+                  .center([20, 0])
+                  // .rotate([4.4, 0])
+                  // .scale(400)
+                  // .translate([element.offsetWidth / 2, element.offsetHeight / 2]);
+                var path = d3.geo.path()
+                  .projection(projection);
+
+                return {path: path, projection: projection};
               },
               fills: {
                 // defaultFill: '#f0af0a',
