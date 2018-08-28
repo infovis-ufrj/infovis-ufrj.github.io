@@ -108,15 +108,16 @@
 
                 //Escreve a mensagem acima do slider (não funciona em todos os casos)
                 if(ui.values[ 0 ] == ui.values[ 1 ]){
-                  $( "#amount" ).val( "Copa de " + ui.values[ 0 ] );
+                  $( "#amount" ).val(ui.values[ 0 ] + " FIFA World Cup");
                 }
                 else{
-                  $( "#amount" ).val( "Copa de " + ui.values[ 0 ] + " até Copa de " + ui.values[ 1 ] );
+                  $( "#amount" ).val(ui.values[ 0 ] + " to " + ui.values[ 1 ] + " FIFA World Cup" );
                 }
 
               },
               //Função a ser executada após o slide ter modificado
               change: function( event, ui ) {
+
                 if(ui.values[ 0 ] == 1942 || ui.values[ 0 ] == 1946){
                   //Verificação do slider menor
                   //Se valor anterior for maior que o atual, estou diminuindo o valor do slider
@@ -125,10 +126,10 @@
 
                     //Escreve a mensagem acima do slider para os casos que o anterior não cobre
                     if($("#slider-range").slider('values',0) == ui.values[ 1 ]){
-                      $( "#amount" ).val( "Copa de " + 1938 );
+                      $( "#amount" ).val(1938 + " FIFA World Cup" );
                     }
                     else{
-                      $( "#amount" ).val( "Copa de " + 1938 + " até Copa de " + ui.values[ 1 ] );
+                      $( "#amount" ).val(1938 + " to " + ui.values[ 1 ] + " FIFA World Cup" );
                     }
                   }
                   else{
@@ -142,10 +143,10 @@
                   if(rangeValue[1] > ui.values[ 1 ]){
                     $("#slider-range").slider('values',1,1938);
                     if(ui.values[ 0 ] == $("#slider-range").slider('values',1)){
-                      $( "#amount" ).val( "Copa de " + 1938 );
+                      $( "#amount" ).val(1938 + " FIFA World Cup");
                     }
                     else{
-                      $( "#amount" ).val( "Copa de " + ui.values[ 0 ] + " até Copa de " + 1938 );
+                      $( "#amount" ).val(ui.values[ 0 ] + " to " + 1938 + " FIFA World Cup" );
                     }
                   }
                   else{
@@ -154,13 +155,19 @@
                 }
                 sliderValue[0] = $("#slider-range").slider('values',0);
                 sliderValue[1] = $("#slider-range").slider('values',1);
+
+                if(sliderValue[0] == sliderValue[1])
+                  winnerInfo(sliderValue[0]);
+                else
+                  winnerInfo();
+                // console.log(sliderValue[0]);
                 startMap();
               }
 
             });
             //Escreve a mensagem acima do slider para os casos que o anterior não cobre
-            $( "#amount" ).val( "Copa de " + $( "#slider-range" ).slider( "values", 0 ) +
-              " até Copa de " + $( "#slider-range" ).slider( "values", 1 ) );
+            $( "#amount" ).val( $( "#slider-range" ).slider( "values", 0 ) +
+              " to " + $( "#slider-range" ).slider( "values", 1 ) + " FIFA World Cup" );
           } );
 
           //Guarda o valor antigo do slider
@@ -181,20 +188,20 @@
               $("#slider-range").slider('disable');
               $("#slider-range").slider('values',0,start);
               $("#slider-range").slider('values',1,start);
-              $( "#amount" ).val( "Copa de " + start );
+              $( "#amount" ).val( start + " FIFA World Cup");
               start += 4;
 
               refresh = setInterval(function(){
                 $("#slider-range").slider('values',0,start);
                 $("#slider-range").slider('values',1,start);
-                $( "#amount" ).val( "Copa de " + start );
+                $( "#amount" ).val( start + " FIFA World Cup");
                 start += 4;
                 if(start == 1942)
                   start = 1950;
                 if(start > 2018){
                   $("#slider-range").slider('values',0,1930);
                   $("#slider-range").slider('values',1,2014);
-                  $( "#amount" ).val( "Copa de " + 1930 + " até Copa de " + 2014 );
+                  $( "#amount" ).val(1930 + " to " + 2014 + " FIFA World Cup" );
                   $("#slider-range").slider('enable');
                   clearInterval(refresh);
                   $("#stop").hide();
@@ -210,7 +217,8 @@
             $( "#stop" ).click(function() {
               $("#slider-range").slider('values',0,1930);
               $("#slider-range").slider('values',1,2014);
-              $( "#amount" ).val( "Copa de " + 1930 + " até Copa de " + 2014 );
+              $("#slider-range").slider('enable');
+              $( "#amount" ).val(1930 + " to " + 2014 + " FIFA World Cup");
               clearInterval(refresh);
               $("#stop").hide();
               $("#play").show();
@@ -224,10 +232,10 @@
         </p>
 
         <div id="slider-range" style="width: 90%; float: left; margin-top: 13px;"></div>
-        <div id="ruler" style="width: 90%; float: left; margin-top: 13px; background-image: url(images/ruler.jpg); background-size:100%; height:60px;"></div>
+        <div id="ruler" style="width: 91.5%;float: left;/* margin-top: 13px; */background-image: url(images/ruler.jpg);background-size:100%;height: 35px;margin-left: -7px;"></div>
         <div id="slider-play" style="width: 8%; float: right;">
-          <button type="button" id="play" class="btn btn-success" style="width: 100%;">Play</button>
-          <button type="button" id="stop" class="btn btn-danger" style="width: 100%; display: none" >Stop</button>
+          <button type="button" id="play" class="btn btn-success" style="width: 100%; background-color:white; color: #06928a; height: 45px;margin-top: -15px;">Play</button>
+          <button type="button" id="stop" class="btn btn-danger" style="width: 100%; display: none; background-color:white; color: red; height: 45px;margin-top: -15px;" >Stop</button>
         </div>
 				<table>
   				<tr>
@@ -243,9 +251,10 @@
           				<!-- Map Panel-->
 
                   <div id="container1" style="position: relative; width: 100%;">
-
-                    <p id="host"></p>
-                    <p id="winner"></p>
+                    <div id="winnerInfo" style="height:23px; margin-bottom:10px;">
+                      <p id="host" style="border:0; color:#06928a; font-weight:bold; text-align: center; font-size: 16px; float:left; width:50%"></p>
+                      <p id="winner" style="border:0; color:#06928a; font-weight:bold; text-align: center; font-size: 16px; float:left; width:50%"></p>
+                    </div>
                   </div>
 
                   <button class="zoom-button" data-zoom="reset">0</button>
@@ -283,76 +292,6 @@
 <script>
 
  function startMap() {
-
-   if(!($("#amount").val().indexOf("até") > -1)){
-     $("#host").css({"visibility":"visible"});
-     $("#winner").css({"visibility":"visible"});
-     if($("#amount").val().indexOf("1930") > -1){
-       $("#host").text("Host: " + "Uruguay")
-       $("#winner").text("Winner: " + "Uruguay")}
-     if($("#amount").val().indexOf("1934") > -1){
-       $("#host").text("Host: " + "Italy")
-       $("#winner").text("Winner: " + "Italy")}
-     if($("#amount").val().indexOf("1938") > -1){
-       $("#host").text("Host: " + "France")
-       $("#winner").text("Winner: " + "Italy")}
-     if($("#amount").val().indexOf("1950") > -1){
-       $("#host").text("Host: " + "Brazil")
-       $("#winner").text("Winner: " + "Uruguay")}
-     if($("#amount").val().indexOf("1954") > -1){
-       $("#host").text("Host: " + "Switzerland")
-       $("#winner").text("Winner: " + "West Germany")}
-     if($("#amount").val().indexOf("1958") > -1){
-       $("#host").text("Host: " + "Sweden")
-       $("#winner").text("Winner: " + "Brazil")}
-     if($("#amount").val().indexOf("1962") > -1){
-       $("#host").text("Host: " + "Chile")
-       $("#winner").text("Winner: " + "Brazil")}
-     if($("#amount").val().indexOf("1966") > -1){
-       $("#host").text("Host: " + "England")
-       $("#winner").text("Winner: " + "England")}
-     if($("#amount").val().indexOf("1970") > -1){
-       $("#host").text("Host: " + "Mexico")
-       $("#winner").text("Winner: " + "Brazil")}
-     if($("#amount").val().indexOf("1974") > -1){
-       $("#host").text("Host: " + "West Germany")
-       $("#winner").text("Winner: " + "West Germany")}
-     if($("#amount").val().indexOf("1978") > -1){
-       $("#host").text("Host: " + "Argentina")
-       $("#winner").text("Winner: " + "Argentina")}
-     if($("#amount").val().indexOf("1982") > -1){
-       $("#host").text("Host: " + "Spain")
-       $("#winner").text("Winner: " + "Italy")}
-     if($("#amount").val().indexOf("1986") > -1){
-       $("#host").text("Host: " + "Mexico")
-       $("#winner").text("Winner: " + "Argentina")}
-     if($("#amount").val().indexOf("1990") > -1){
-       $("#host").text("Host: " + "Italy")
-       $("#winner").text("Winner: " + "West Germany")}
-     if($("#amount").val().indexOf("1994") > -1){
-       $("#host").text("Host: " + "United States")
-       $("#winner").text("Winner: " + "Brazil")}
-     if($("#amount").val().indexOf("1998") > -1){
-       $("#host").text("Host: " + "France")
-       $("#winner").text("Winner: " + "France")}
-     if($("#amount").val().indexOf("2002") > -1){
-       $("#host").text("Host: " + "South Korea and Japan")
-       $("#winner").text("Winner: " + "Brazil")}
-     if($("#amount").val().indexOf("2006") > -1){
-       $("#host").text("Host: " + "Germany")
-       $("#winner").text("Winner: " + "Italy")}
-     if($("#amount").val().indexOf("2010") > -1){
-       $("#host").text("Host: " + "South Africa")
-       $("#winner").text("Winner: " + "Spain")}
-     if($("#amount").val().indexOf("2014") > -1){
-       $("#host").text("Host: " + "Brazil")
-       $("#winner").text("Winner: " + "Germany")}
-   }
-   else{
-     $("#host").css({"visibility":"hidden"});
-     $("#winner").css({"visibility":"hidden"});
-   }
-
 
     if(map != null){
         latLong = {};
@@ -418,6 +357,145 @@
 
   function setMap(newMap){
       map = newMap;
+  }
+
+  function winnerInfo(year){
+    if(year == undefined){
+      console.log("testando");
+      if(!($("#amount").val().indexOf("to") > -1)){
+        console.log("um ano");
+        $("#host").css({"visibility":"visible"});
+        $("#winner").css({"visibility":"visible"});
+        if(year == "1930"){
+          $("#host").text("Host: " + "Uruguay")
+          $("#winner").text("Winner: " + "Uruguay")}
+        if(year == "1934"){
+          $("#host").text("Host: " + "Italy")
+          $("#winner").text("Winner: " + "Italy")}
+        if(year == "1938"){
+          $("#host").text("Host: " + "France")
+          $("#winner").text("Winner: " + "Italy")}
+        if(year == "1950"){
+          $("#host").text("Host: " + "Brazil")
+          $("#winner").text("Winner: " + "Uruguay")}
+        if(year == "1954"){
+          $("#host").text("Host: " + "Switzerland")
+          $("#winner").text("Winner: " + "West Germany")}
+        if(year == "1958"){
+          $("#host").text("Host: " + "Sweden")
+          $("#winner").text("Winner: " + "Brazil")}
+        if(year == "1962"){
+          $("#host").text("Host: " + "Chile")
+          $("#winner").text("Winner: " + "Brazil")}
+        if(year == "1966"){
+          $("#host").text("Host: " + "England")
+          $("#winner").text("Winner: " + "England")}
+        if(year == "1970"){
+          $("#host").text("Host: " + "Mexico")
+          $("#winner").text("Winner: " + "Brazil")}
+        if(year == "1974"){
+          $("#host").text("Host: " + "West Germany")
+          $("#winner").text("Winner: " + "West Germany")}
+        if(year == "1978"){
+          $("#host").text("Host: " + "Argentina")
+          $("#winner").text("Winner: " + "Argentina")}
+        if(year == "1982"){
+          $("#host").text("Host: " + "Spain")
+          $("#winner").text("Winner: " + "Italy")}
+        if(year == "1986"){
+          $("#host").text("Host: " + "Mexico")
+          $("#winner").text("Winner: " + "Argentina")}
+        if(year == "1990"){
+          $("#host").text("Host: " + "Italy")
+          $("#winner").text("Winner: " + "West Germany")}
+        if(year == "1994"){
+          $("#host").text("Host: " + "United States")
+          $("#winner").text("Winner: " + "Brazil")}
+        if(year == "1998"){
+          $("#host").text("Host: " + "France")
+          $("#winner").text("Winner: " + "France")}
+        if(year == "2002"){
+          $("#host").text("Host: " + "South Korea and Japan")
+          $("#winner").text("Winner: " + "Brazil")}
+        if(year == "2006"){
+          $("#host").text("Host: " + "Germany")
+          $("#winner").text("Winner: " + "Italy")}
+        if(year == "2010"){
+          $("#host").text("Host: " + "South Africa")
+          $("#winner").text("Winner: " + "Spain")}
+        if(year == "2014"){
+          $("#host").text("Host: " + "Brazil")
+          $("#winner").text("Winner: " + "Germany")}
+      }
+      else{
+        console.log("dois anos");
+        $("#host").css({"visibility":"hidden"});
+        $("#winner").css({"visibility":"hidden"});
+      }
+    }else{
+      $("#host").css({"visibility":"visible"});
+      $("#winner").css({"visibility":"visible"});
+      if(year == "1930"){
+        $("#host").text("Host: " + "Uruguay")
+        $("#winner").text("Winner: " + "Uruguay")}
+      if(year == "1934"){
+        $("#host").text("Host: " + "Italy")
+        $("#winner").text("Winner: " + "Italy")}
+      if(year == "1938"){
+        $("#host").text("Host: " + "France")
+        $("#winner").text("Winner: " + "Italy")}
+      if(year == "1950"){
+        $("#host").text("Host: " + "Brazil")
+        $("#winner").text("Winner: " + "Uruguay")}
+      if(year == "1954"){
+        $("#host").text("Host: " + "Switzerland")
+        $("#winner").text("Winner: " + "West Germany")}
+      if(year == "1958"){
+        $("#host").text("Host: " + "Sweden")
+        $("#winner").text("Winner: " + "Brazil")}
+      if(year == "1962"){
+        $("#host").text("Host: " + "Chile")
+        $("#winner").text("Winner: " + "Brazil")}
+      if(year == "1966"){
+        $("#host").text("Host: " + "England")
+        $("#winner").text("Winner: " + "England")}
+      if(year == "1970"){
+        $("#host").text("Host: " + "Mexico")
+        $("#winner").text("Winner: " + "Brazil")}
+      if(year == "1974"){
+        $("#host").text("Host: " + "West Germany")
+        $("#winner").text("Winner: " + "West Germany")}
+      if(year == "1978"){
+        $("#host").text("Host: " + "Argentina")
+        $("#winner").text("Winner: " + "Argentina")}
+      if(year == "1982"){
+        $("#host").text("Host: " + "Spain")
+        $("#winner").text("Winner: " + "Italy")}
+      if(year == "1986"){
+        $("#host").text("Host: " + "Mexico")
+        $("#winner").text("Winner: " + "Argentina")}
+      if(year == "1990"){
+        $("#host").text("Host: " + "Italy")
+        $("#winner").text("Winner: " + "West Germany")}
+      if(year == "1994"){
+        $("#host").text("Host: " + "United States")
+        $("#winner").text("Winner: " + "Brazil")}
+      if(year == "1998"){
+        $("#host").text("Host: " + "France")
+        $("#winner").text("Winner: " + "France")}
+      if(year == "2002"){
+        $("#host").text("Host: " + "South Korea and Japan")
+        $("#winner").text("Winner: " + "Brazil")}
+      if(year == "2006"){
+        $("#host").text("Host: " + "Germany")
+        $("#winner").text("Winner: " + "Italy")}
+      if(year == "2010"){
+        $("#host").text("Host: " + "South Africa")
+        $("#winner").text("Winner: " + "Spain")}
+      if(year == "2014"){
+        $("#host").text("Host: " + "Brazil")
+        $("#winner").text("Winner: " + "Germany")}
+    }
   }
 
 
