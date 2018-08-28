@@ -126,7 +126,8 @@ nav ul {
 main .container, main .container__fluxo-CRC {
   max-width: 960px;
   background-color: #ffffff;
-  padding: 20px; }
+  padding: 20px;
+  padding-top: 10px; }
 
 .main-header {
   margin: auto;
