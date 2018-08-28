@@ -195,7 +195,7 @@
               // element: document.getElementById('container1'),
               element: this.$container.get(0),
               projection: 'mercator',
-              height: 600,
+              height: 400,
               width: 900,
               geographyConfig: {
                       highlightOnHover: true,
