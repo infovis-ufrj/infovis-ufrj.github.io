@@ -208,7 +208,7 @@
                 lt50: 'rgba(20,20,20,0.9)',
                 gt50: 'red'
               },
-              done: this._handleMapReady.bind(this)   
+              done: this._handleMapReady.bind(this)
               // done: console.log(this)
             });
 
@@ -224,7 +224,7 @@
                 datamap: datamap
             });
 
-            
+
 
             datamap.svg.selectAll('.datamaps-subunit').on('click', function(geography) {
                       if(flagMouse > 0){
@@ -238,14 +238,14 @@
                       }
 
                   });
-            
-            
+
+
 
       }
 
       //Necessário para não mudar de país ao dar scroll no mapa
       var movimento = null;
-      
+
 
       $(document).on('mousedown', function() {
           flagMouse = 1;
@@ -256,10 +256,11 @@
           if(movimento > 20){
             flagMouse = 0;
           }
-          
+
       });
 
       map = new Datamap();
       setMap(map);
+      winnerInfo();
       startMap();
 });
