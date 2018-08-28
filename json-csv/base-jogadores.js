@@ -26043,13 +26043,13 @@ var jogadores = [
     "Year": 1986,
     "Team": "Canada",
     "Club": "no cl",
-    "ClubCountry": "",
+    "ClubCountry": "No Club / Free Agent",
   },
   {
     "Year": 1986,
     "Team": "Canada",
     "Club": "no cl",
-    "ClubCountry": "",
+    "ClubCountry": "No Club / Free Agent",
   },
   {
     "Year": 1986,
@@ -26097,7 +26097,7 @@ var jogadores = [
     "Year": 1986,
     "Team": "Canada",
     "Club": "no cl",
-    "ClubCountry": "",
+    "ClubCountry": "No Club / Free Agent",
   },
   {
     "Year": 1986,
@@ -26121,7 +26121,7 @@ var jogadores = [
     "Year": 1986,
     "Team": "Canada",
     "Club": "no cl",
-    "ClubCountry": "",
+    "ClubCountry": "No Club / Free Agent",
   },
   {
     "Year": 1986,
@@ -26133,7 +26133,7 @@ var jogadores = [
     "Year": 1986,
     "Team": "Canada",
     "Club": "no cl",
-    "ClubCountry": "",
+    "ClubCountry": "No Club / Free Agent",
   },
   {
     "Year": 1986,
@@ -26151,7 +26151,7 @@ var jogadores = [
     "Year": 1986,
     "Team": "Canada",
     "Club": "no cl",
-    "ClubCountry": "",
+    "ClubCountry": "No Club / Free Agent",
   },
   {
     "Year": 1986,
@@ -49635,7 +49635,7 @@ var jogadores = [
     "Year": 2010,
     "Team": "Australia",
     "Club": "Free agent",
-    "ClubCountry": "",
+    "ClubCountry": "No Club / Free Agent",
   },
   {
     "Year": 2010,
@@ -50901,7 +50901,7 @@ var jogadores = [
     "Year": 2010,
     "Team": "New Zealand",
     "Club": "Free agent",
-    "ClubCountry": "",
+    "ClubCountry": "No Club / Free Agent",
   },
   {
     "Year": 2010,
@@ -50961,7 +50961,7 @@ var jogadores = [
     "Year": 2010,
     "Team": "New Zealand",
     "Club": "Free agent",
-    "ClubCountry": "",
+    "ClubCountry": "No Club / Free Agent",
   },
   {
     "Year": 2010,

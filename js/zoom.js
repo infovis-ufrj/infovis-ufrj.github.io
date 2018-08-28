@@ -229,8 +229,10 @@
             datamap.svg.selectAll('.datamaps-subunit').on('click', function(geography) {
                       if(flagMouse > 0){
                           link = geography.properties.name;
+                          if(link == "United States of America")
+                            link = "United States";
                           $("li").removeClass("selected");
-                          $("li[title="+link+"]").addClass("selected");
+                          $("li[title='"+link+"']").addClass("selected");
                           $(".ddTitleText ").click();
                           $(".ddTitleText ").click();
                       }

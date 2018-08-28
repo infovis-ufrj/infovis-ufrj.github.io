@@ -1194,6 +1194,11 @@ var paises = {
     "lon": "-95.712891",
     "sigla": "US"
   },
+  "United States of America": {
+    "lat": "37.09024",
+    "lon": "-95.712891",
+    "sigla": "US"
+  },
   "Uruguay": {
     "lat": "-32.522779",
     "lon": "-55.765835",
@@ -1279,7 +1284,7 @@ var paises = {
     "lon": "29.154857",
     "sigla": "ZW"
   },
-  "": {
+  "No Club / Free Agent": {
     "lat": "-50",
     "lon": "0",
     "sigla": "ZM"
