@@ -44,14 +44,12 @@
     		</div>
       </div></tr></table></td></tr></table></div>
 		</header>
-
 		<main>
 			<header class="main-header">
         <table>
           <tr>
             <td>
               <script type="text/javascript">
-
                       $(function(){
                           sliderValue = [];
                           sliderValue[0] = 1930;
@@ -70,13 +68,9 @@
                           });
 
                       });
-
-
               </script>
-              <!-- <select name="countries" id="countries" style="width:300px;"></select> -->
             </td>
             <td>
-              <!-- <button class="dropbtn" onclick="javascript:startMap();" style="height: 25px;width: 100px;">Aplicar</button> -->
             </td>
           </tr>
         </table>
@@ -239,11 +233,10 @@
 
         </script>
         <p>
-          <!-- <label for="amount">Copas</label> -->
           <input type="text" id="amount" readonly style="border:0; color:#06928a; font-weight:bold; text-align: center; font-size: 16px;">
         </p>
 
-        <div id="slider-range" style="width: 90%; float: left; margin-top: 13px;"></div>
+        <div id="slider-range" style="width: 90%; float: left; margin-top: 13px; cursor: pointer;"></div>
         <div id="ruler" style="width: 91.5%;float: left;/* margin-top: 13px; */background-image: url(images/ruler.jpg);background-size:100%;height: 35px;margin-left: -7px;"></div>
         <div id="slider-play" style="width: 8%; float: right;">
           <button type="button" id="play" class="btn btn-success" style="width: 100%; background-color:white; color: #06928a; height: 45px;margin-top: -15px;">Play</button>
@@ -252,24 +245,14 @@
 				<table>
   				<tr>
   				    <td width=470 valign=top>
-          				<h3 id="PanelClub" class="subtitle-settings" style="visibility: hidden;">
-          				    <span id="mediaName" class="subtitle-box"></span>
-          				</h3>
-          				<!-- Club Details Panel-->
-
-          				<h3 id="PanelClubDetails" class="subtitle-settings" style="visibility: hidden;">
-          				    <span class="subtitle-box">Clube</span>
-          				</h3>
-          				<!-- Map Panel-->
-
-                  <div id="container1" style="position: relative; width: 100%;">
+            				<!-- Map Panel-->
+                  <div id="container1" style="position: relative; width: 100%; margin-top:15px">
                     <div id="winnerInfo" style="height:23px; margin-bottom:10px;">
                       <p id="host" style="border:0; color:#1130b5; font-weight:bold; text-align: center; font-size: 16px; float:left; width:33%"></p>
                      <div id="legend" style="background-image: url(images/legenda.jpg); float:left; width:33%; background-size:100%;height: 23px;"></div>
                       <p id="winner" style="border:0; color:#cfd132; font-weight:bold; text-align: center; font-size: 16px; float:left; width:33%"></p>
                     </div>
                   </div>
-
                   <button class="zoom-button" data-zoom="reset">0</button>
                   <button class="zoom-button" data-zoom="out">-</button>
                   <button class="zoom-button" data-zoom="in">+</button>
@@ -285,8 +268,6 @@
         <img src="images/logo-coppe.png" alt="FIFA" class="logo-desfensoria" style="width:120px; height:"90px"">
     </footer>
 	</div>
-	<!-- <script src="js/jquery.min.js"></script> -->
-	<!-- <script src="js/jquery.bundle.min.js"></script> -->
 </body>
 
 <!-- <msdropdown> -->
@@ -312,16 +293,6 @@
         var pais = $("#countries").val();
         var bubbles = {};
         bubblesFinal = [];
-
-        // for(paisI in paisClube){
-        //   for(year in paisClube[paisI]){
-        //     for(origem in paisClube[paisI][year]){
-        //       if(!paises[origem]){
-        //         console.log(origem);
-        //       }
-        //     }
-        //   }
-        // }
 
         for(year in paisClube[pais]){
 
@@ -361,9 +332,7 @@
          }
        });
       });
-
     }
-
  }
 
   var map;
@@ -532,7 +501,6 @@
         changeColor("BRA", "DEU")}
     }
 
-
   function clearColor(){
     if(oldHost !== undefined){
       if(oldHost == "JPN"){
@@ -567,7 +535,5 @@
     map.updateChoropleth(objWinner);
     oldWinner = winner;
   }
-
-
 
 </script>
