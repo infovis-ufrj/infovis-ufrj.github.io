@@ -355,7 +355,7 @@ $(window).load(function () {
            + data.name +
            "</b><br/>"
            + data.qtdJogadores +
-           " players</div>";
+           (data.qtdJogadores == 1 ? " player</div>" : " players</div>");
          }
        });
       });
